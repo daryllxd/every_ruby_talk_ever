@@ -1,6 +1,14 @@
 # Cascadia Ruby 2012 - Therapeutic Refactoring Large 
 
-Random acts of refactoring: Small careful steps that improve the readability of the code. Tests are implied.
+Few things draw my attention than a looming deadline. Some part of my brain watches in morbid fascination as the deadline approaches, wondering whether to call emergency services or maybe just settle in, eat popcorn, and enjoy the show. I can't help but keep a weary eye on it. A weary eye that is no longer paying attention to the code at hand. I need all the weary eyes I can get. Without I forget best practices, I revert to less successful strategies, like guessing, and desperately copying code from Stack Overflow.
+
+Sometimes I'm happy. There are moments when the world melts away. Your sense of self dissipates, you become completely absorbed in what you do. Time appears to slow down and speed up simultaneously. Being awesome feels effortless.
+
+I've taken to coming into the office early in the morning and committing random acts of refactoring. Some people are calling this guilt-driven development (laughter), but really it's not. Refactoring makes me happy. More refactoring is an optimization. So today I'm going to tell you a story. It has a beginning, 2 middles, an end, and a moral.
+
+So to be clear, when I say refactoring, I mean small, careful steps that improve the structure and readability of the code without changing its behavior. Tests are implied.
+
+So, once upon a time, there was an application that performed some incredibly dirty hacks in order to put the data straight into a number of real world, hard copy publishing systems. I found this particular specimen in the dark recesses of that code base:
 
     def self.xyz_filename(target)
       # File format:
@@ -21,7 +29,7 @@ Random acts of refactoring: Small careful steps that improve the readability of 
       return filename
     end
 
-"A kitten dies every time this code is run." No tests, no documentation.
+It was in a module that was over 300 lines long, most of which was in a single method. This module talked to code all over the application. It dealt in temporary files, FTP, it shelled out EXIF 2 metadata into JPEG, it handled encoding. It had a comment in it that read, "A kitten dies every time this code is run." (laughter) We had it running on a cron job (laughter). It had no tests and it had no documentation.
 
 The comment is bad, and its wrong. Basically information is being shrugged onto a string, but there is a chunk of something (`truncated_title`). There are also low-level shit such as gsub.
 
